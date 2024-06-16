@@ -68,11 +68,15 @@ private:
 
 /* Do not log assertions or debug info on release builds*/
 #define SL_ASSERT_FALSE(condition, message)                                                                            \
+    if (condition)                                                                                                     \
+    {                                                                                                                  \
+        throw slog::LogException(message);                                                                             \
+    }
+#define SL_ASSERT_TRUE(condition, message)                                                                             \
     if (!(condition))                                                                                                  \
     {                                                                                                                  \
         throw slog::LogException(message);                                                                             \
     }
-#define SL_ASSERT_TRUE(condition, message) SL_ASSERT_FALSE(!(condition), message)
 #define SL_ASSERT(condition, message) SL_ASSERT_TRUE(condition, message)
 
 #else // NDEBUG
