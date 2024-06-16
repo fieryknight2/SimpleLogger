@@ -57,7 +57,11 @@ private:
 
 } // namespace slog
 
+#define SL_GET_CONSOLE_LOGGER()                                                                                        \
+    std::dynamic_pointer_cast<slog::ConsoleLogger>(slog::SimpleLogger::GlobalLogger()->getLogger(0))
 #define SL_CAPTURE_EXCEPTIONS() slog::SimpleLogger::CaptureExceptions()
+#define SL_LOG_TO_FILE(file, mode)                                                                                     \
+    slog::SimpleLogger::GlobalLogger()->addLogger(std::make_shared<slog::FileLogger>(file, mode))
 
 /** Debug and assert macros */
 #ifndef NDEBUG
@@ -75,7 +79,7 @@ private:
 
 #endif // NDEBUG
 
-#define SL_LOG_EXCEPTION(exception) slog::SimpleLogger::GlobalLogger()->exception(exception)
+#define SL_LOG_EXCEPTION(exp) slog::SimpleLogger::GlobalLogger()->exception(exp)
 
 #ifdef SL_MIN_LOG_LEVEL
 
