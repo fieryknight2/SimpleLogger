@@ -5,6 +5,7 @@
  * @date 6/15/2024
  */
 #include <iostream>
+#include <thread>
 #include <unordered_map>
 
 #include "simplelogger.hpp"
@@ -13,6 +14,8 @@ int main(const int argc, char *argv[])
 {
     slog::SimpleLogger::GlobalLogger()->setMinLogLevel(slog::LogLevel::DEBUG);
     std::cout << "Log level: " << slog::getLogName(slog::SimpleLogger::GlobalLogger()->getMinLogLevel()) << std::endl;
+
+    SF_LOG_VERSION_INFO();
 
     SF_LOG_WARNING("Ran using " + std::string(argv[0]));
 
@@ -27,16 +30,19 @@ int main(const int argc, char *argv[])
 
     for (int i = 0; i < argc; i++)
     {
-        SF_LOG_DEBUG("Argument: " + std::string(argv[i] + std::string(" ") + "is " + std::string(argv[i])));
+        SF_LOG_DEBUG("Argument: " + std::to_string(i) + " is " + std::string(argv[i]));
     }
 
     SF_LOG_INFO("Opening file example.log for logging");
     slog::SimpleLogger::GlobalLogger()->addLogger(std::make_shared<slog::FileLogger>("example.log"));
-    SF_LOG_DEBUG("This is a debug message");
 
     SF_LOG_DEBUG("This is a debug message");
-    SF_LOG_DEBUG("This is a debug message");
-    SF_LOG_DEBUG("This is a debug message");
+    for (int i = 0; i < 100; i++)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+        SF_LOG_DEBUG("This is a debug message");
+    }
+
     SF_LOG_INFO("This is an info message");
     SF_LOG_WARNING("This is a warning message");
     SF_LOG_ERROR("This is an error message");
