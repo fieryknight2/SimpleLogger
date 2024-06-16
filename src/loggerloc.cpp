@@ -6,20 +6,19 @@
 #include <sstream>
 #include <unordered_map>
 
-constexpr std::string DEBUG_COLOR = "\033[34m;";
-constexpr std::string INFO_COLOR = "\033[32m;";
-constexpr std::string WARNING_COLOR = "\033[33m;";
-constexpr std::string ERROR_COLOR = "\033[31m;";
-constexpr std::string FATAL_COLOR = "\033[41m;";
-constexpr std::string RESET_COLOR = "\033[0m;";
+constexpr std::string DEBUG_COLOR = "\033[34m";
+constexpr std::string INFO_COLOR = "\033[32m";
+constexpr std::string WARNING_COLOR = "\033[33m";
+constexpr std::string ERROR_COLOR = "\033[31m";
+constexpr std::string FATAL_COLOR = "\033[41m";
+constexpr std::string RESET_COLOR = "\033[0m";
 
 namespace slog
 {
 
 std::unordered_map<LogLevel, std::string> LogLevelColors = {
-        {LogLevel::NONE, ""},           {LogLevel::DEBUG, DEBUG_COLOR},
-        {LogLevel::INFO, INFO_COLOR},   {LogLevel::WARNING, WARNING_COLOR},
-        {LogLevel::ERROR, ERROR_COLOR}, {LogLevel::FATAL, FATAL_COLOR}};
+        {LogLevel::NONE, RESET_COLOR},      {LogLevel::DEBUG, DEBUG_COLOR}, {LogLevel::INFO, INFO_COLOR},
+        {LogLevel::WARNING, WARNING_COLOR}, {LogLevel::ERROR, ERROR_COLOR}, {LogLevel::FATAL, FATAL_COLOR}};
 
 std::unordered_map<LogLevel, std::string> LogLevelNames = {{LogLevel::NONE, "NONE"},   {LogLevel::DEBUG, "DEBUG"},
                                                            {LogLevel::INFO, "INFO"},   {LogLevel::WARNING, "WARNING"},
@@ -71,10 +70,7 @@ void ConsoleLogger::log(const std::string &message, const LogLevel level)
         return;
     }
 
-    if (m_repeatCount > 0) // Move to the next line
-        std::cout << std::endl;
-
-    m_repeatCount = 0;
+    m_repeatCount = 1;
     m_repeatedMessage = message;
     m_repeatedLevel = level;
 
@@ -157,6 +153,7 @@ void FileLogger::log(const std::string &message, const LogLevel level)
 
     m_file << "[" << getTime() << " " << formatStringFromLeft(LogLevelNames[level], MAX_LOG_LEVEL_NAME_LENGTH)
            << "]: " << message << std::endl;
+    m_file.flush();
 }
 
 void FileLogger::exception(const LogException &exception)
