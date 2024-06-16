@@ -53,11 +53,20 @@ private:
 /** Debug and assert macros */
 #ifndef NDEBUG
 
+/* Do not log assertions or debug info on release builds*/
 #define SF_ASSERT(condition, message)                                                                                  \
     if (!(condition))                                                                                                  \
     {                                                                                                                  \
-        throw slog::LogException(message);                                                                            \
+        throw slog::LogException(message);                                                                             \
     }
+
+#else // NDEBUG
+
+#define SF_ASSERT(condition, message)
+
+#endif // NDEBUG
+
+#define SF_LOG_EXCEPTION(exception) slog::SimpleLogger::GlobalLogger()->exception(exception)
 
 #ifdef SF_MIN_LOG_LEVEL
 
@@ -72,7 +81,17 @@ private:
  * The number will also log every level below it,ex: 2 would log warning, error, and fatal
  */
 #if SF_MIN_LOG_LEVEL > 3
+
+#ifndef NDEBUG
+
 #define SF_LOG_DEBUG(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::DEBUG)
+
+#else
+
+#define SF_LOG_DEBUG(message)
+
+#endif // NDEBUG
+
 #else // SF_MIN_LOG_LEVEL == 0
 #define SF_LOG_DEBUG(message)
 #endif // SF_MIN_LOG_LEVEL == 0
@@ -111,17 +130,3 @@ private:
 #define SF_LOG_FATAL(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::FATAL)
 
 #endif // SF_MIN_LOG_LEVEL
-
-#else // NDEBUG
-
-/* Do nothing for release builds */
-
-#define SF_ASSERT(condition, message)
-
-#define SF_LOG_DEBUG(message)
-#define SF_LOG_INFO(message)
-#define SF_LOG_WARNING(message)
-#define SF_LOG_ERROR(message)
-#define SF_LOG_FATAL(message)
-
-#endif // NDEBUG
