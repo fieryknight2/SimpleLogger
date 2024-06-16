@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-namespace sflog
+namespace slog
 {
 
 std::shared_ptr<SimpleLogger> SimpleLogger::s_GlobalLogger;
@@ -86,4 +86,4 @@ std::shared_ptr<LoggerLoc> SimpleLogger::getLogger(const uint32_t index)
     return m_loggerLocs[index];
 }
 
-} // namespace sflog
+} // namespace slog

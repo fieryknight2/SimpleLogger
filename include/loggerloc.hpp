@@ -12,7 +12,7 @@
 
 #include "logexception.hpp"
 
-namespace sflog
+namespace slog
 {
 
 /* Enums for logger information */
@@ -101,4 +101,4 @@ private:
     std::ofstream m_file;
 };
 
-} // namespace sflog
+} // namespace slog

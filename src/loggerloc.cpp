@@ -13,7 +13,7 @@ constexpr std::string ERROR_COLOR = "\033[31m;";
 constexpr std::string FATAL_COLOR = "\033[41m;";
 constexpr std::string RESET_COLOR = "\033[0m;";
 
-namespace sflog
+namespace slog
 {
 
 std::unordered_map<LogLevel, std::string> LogLevelColors = {
@@ -168,4 +168,4 @@ void FileLogger::exception(const LogException &exception)
 }
 
 
-} // namespace sflog
+} // namespace slog

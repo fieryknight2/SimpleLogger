@@ -1,12 +1,5 @@
 cmake_minimum_required(VERSION 3.29)
 
-# Options for the project
-if (NOT DEFINED SIMPLE_LOGGER_MIN_LOG_LEVEL)
-    set(SIMPLE_LOGGER_MIN_LOG_LEVEL 4)
-endif ()
-
-option(BUILD_LOGGER_EXAMPLE "Build the logger example" OFF)
-
 # Which type of build?
 if (CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
     # This is the top-level project
@@ -17,6 +10,13 @@ else ()
     set(SIMPLE_LOGGER_INCLUDE_DIR PARENT_SCOPE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 endif ()
+
+# Options for the project
+if (NOT DEFINED SIMPLE_LOGGER_MIN_LOG_LEVEL)
+    set(SIMPLE_LOGGER_MIN_LOG_LEVEL 4)
+endif ()
+
+option(BUILD_LOGGER_EXAMPLE "Build the logger example" OFF)
 
 # Required C++ version
 set(CMAKE_CXX_STANDARD 20)
@@ -40,7 +40,7 @@ target_include_directories(SimpleLogger PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inclu
 # Debugging
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-    message("Building with a log level of ${SIMPLE_LOGGER_MIN_LOG_LEVEL}")
+    message("Building SimpleLogger with a log level of ${SIMPLE_LOGGER_MIN_LOG_LEVEL}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Werror -DSF_MIN_LOG_LEVEL=${SIMPLE_LOGGER_MIN_LOG_LEVEL}")
 
 else ()

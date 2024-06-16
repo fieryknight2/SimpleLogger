@@ -12,7 +12,7 @@
 
 #include "loggerloc.hpp"
 
-namespace sflog
+namespace slog
 {
 
 class SimpleLogger
@@ -48,7 +48,7 @@ private:
     static std::shared_ptr<SimpleLogger> s_GlobalLogger;
 };
 
-} // namespace sflog
+} // namespace slog
 
 /** Debug and assert macros */
 #ifndef NDEBUG
@@ -56,7 +56,7 @@ private:
 #define SF_ASSERT(condition, message)                                                                                  \
     if (!(condition))                                                                                                  \
     {                                                                                                                  \
-        throw sflog::LogException(message);                                                                            \
+        throw slog::LogException(message);                                                                            \
     }
 
 #ifdef SF_MIN_LOG_LEVEL
@@ -72,31 +72,31 @@ private:
  * The number will also log every level below it,ex: 2 would log warning, error, and fatal
  */
 #if SF_MIN_LOG_LEVEL > 3
-#define SF_LOG_DEBUG(message) sflog::SimpleLogger::GlobalLogger()->log(message, sflog::LogLevel::DEBUG)
+#define SF_LOG_DEBUG(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::DEBUG)
 #else // SF_MIN_LOG_LEVEL == 0
 #define SF_LOG_DEBUG(message)
 #endif // SF_MIN_LOG_LEVEL == 0
 
 #if SF_MIN_LOG_LEVEL > 2
-#define SF_LOG_INFO(message) sflog::SimpleLogger::GlobalLogger()->log(message, sflog::LogLevel::INFO)
+#define SF_LOG_INFO(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::INFO)
 #else
 #define SF_LOG_INFO(message)
 #endif // SF_MIN_LOG_LEVEL > 0
 
 #if SF_MIN_LOG_LEVEL > 1
-#define SF_LOG_WARNING(message) sflog::SimpleLogger::GlobalLogger()->log(message, sflog::LogLevel::WARNING)
+#define SF_LOG_WARNING(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::WARNING)
 #else
 #define SF_LOG_WARNING(message)
 #endif // SF_MIN_LOG_LEVEL > 1
 
 #if SF_MIN_LOG_LEVEL > 0
-#define SF_LOG_ERROR(message) sflog::SimpleLogger::GlobalLogger()->log(message, sflog::LogLevel::ERROR)
+#define SF_LOG_ERROR(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::ERROR)
 #else
 #define SF_LOG_ERROR(message)
 #endif // SF_MIN_LOG_LEVEL > 2
 
 #if SF_MIN_LOG_LEVEL > -1
-#define SF_LOG_FATAL(message) sflog::SimpleLogger::GlobalLogger()->log(message, sflog::LogLevel::FATAL)
+#define SF_LOG_FATAL(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::FATAL)
 #else
 #define SF_LOG_FATAL(message)
 #endif // SF_MIN_LOG_LEVEL > 3
@@ -104,11 +104,11 @@ private:
 #else // SF_MIN_LOG_LEVEL
 
 // Log level not set, so default to everything
-#define SF_LOG_DEBUG(message) sflog::SimpleLogger::GlobalLogger()->log(message, sflog::LogLevel::DEBUG)
-#define SF_LOG_INFO(message) sflog::SimpleLogger::GlobalLogger()->log(message, sflog::LogLevel::INFO)
-#define SF_LOG_WARNING(message) sflog::SimpleLogger::GlobalLogger()->log(message, sflog::LogLevel::WARNING)
-#define SF_LOG_ERROR(message) sflog::SimpleLogger::GlobalLogger()->log(message, sflog::LogLevel::ERROR)
-#define SF_LOG_FATAL(message) sflog::SimpleLogger::GlobalLogger()->log(message, sflog::LogLevel::FATAL)
+#define SF_LOG_DEBUG(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::DEBUG)
+#define SF_LOG_INFO(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::INFO)
+#define SF_LOG_WARNING(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::WARNING)
+#define SF_LOG_ERROR(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::ERROR)
+#define SF_LOG_FATAL(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::FATAL)
 
 #endif // SF_MIN_LOG_LEVEL
 

@@ -10,7 +10,7 @@
 #include <string>
 #include <utility>
 
-namespace sflog
+namespace slog
 {
 
 class LogException : public std::exception
@@ -24,4 +24,4 @@ private:
     std::string m_message;
 };
 
-} // namespace sflog
+} // namespace slog

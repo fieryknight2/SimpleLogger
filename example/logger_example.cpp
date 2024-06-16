@@ -11,8 +11,8 @@
 
 int main(const int argc, char *argv[])
 {
-    sflog::SimpleLogger::GlobalLogger()->setMinLogLevel(sflog::LogLevel::DEBUG);
-    std::cout << "Log level: " << sflog::getLogName(sflog::SimpleLogger::GlobalLogger()->getMinLogLevel()) << std::endl;
+    slog::SimpleLogger::GlobalLogger()->setMinLogLevel(slog::LogLevel::DEBUG);
+    std::cout << "Log level: " << slog::getLogName(slog::SimpleLogger::GlobalLogger()->getMinLogLevel()) << std::endl;
 
     SF_LOG_WARNING("Ran using " + std::string(argv[0]));
 
@@ -31,7 +31,7 @@ int main(const int argc, char *argv[])
     }
 
     SF_LOG_INFO("Opening file example.log for logging");
-    sflog::SimpleLogger::GlobalLogger()->addLogger(std::make_shared<sflog::FileLogger>("example.log"));
+    slog::SimpleLogger::GlobalLogger()->addLogger(std::make_shared<slog::FileLogger>("example.log"));
     SF_LOG_DEBUG("This is a debug message");
 
     SF_LOG_DEBUG("This is a debug message");
@@ -42,15 +42,15 @@ int main(const int argc, char *argv[])
     SF_LOG_ERROR("This is an error message");
     SF_LOG_FATAL("This is a fatal message");
 
-    sflog::SimpleLogger::GlobalLogger()->exception(sflog::LogException("This is an exception"));
+    slog::SimpleLogger::GlobalLogger()->exception(slog::LogException("This is an exception"));
 
     try
     {
         SF_ASSERT(false, "This will fail.");
     }
-    catch (const sflog::LogException &exception)
+    catch (const slog::LogException &exception)
     {
-        sflog::SimpleLogger::GlobalLogger()->exception(exception);
+        slog::SimpleLogger::GlobalLogger()->exception(exception);
     }
 
     SF_ASSERT(false, "The end.");
