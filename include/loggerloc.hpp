@@ -68,6 +68,12 @@ public:
 
     [[nodiscard]] uint32_t getRepeatCount() const { return m_repeatCount; }
 
+    void enableFullColor() { m_fullColor = true; }
+    void enableFullColor(const bool enable) { m_fullColor = enable; }
+    void disableFullColor() { m_fullColor = false; }
+    [[nodiscard]] bool isFullColorEnabled() const { return m_fullColor; }
+
+    void enableColor() { m_color = true; }
     void enableColor(const bool enable) { m_color = enable; }
     void disableColor() { m_color = false; }
     [[nodiscard]] bool isColorEnabled() const { return m_color; }
@@ -78,6 +84,7 @@ private:
     LogLevel m_repeatedLevel = LogLevel::NONE;
 
     bool m_color = false;
+    bool m_fullColor = true;
 
     uint32_t m_repeatCount = 0;
 };

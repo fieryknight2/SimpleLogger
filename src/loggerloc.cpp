@@ -61,10 +61,17 @@ void ConsoleLogger::log(const std::string &message, const LogLevel level)
 
         std::cout << "\r"; // This should work
 
-        std::cout << "[" << getTime() << " " << (m_color ? LogLevelColors[level] : "")
+        if (m_fullColor)
+            std::cout << LogLevelColors[level];
+
+        std::cout << "[" << getTime() << " " << (m_color and !m_fullColor ? LogLevelColors[level] : "")
                   << formatStringFromLeft(LogLevelNames[level], MAX_LOG_LEVEL_NAME_LENGTH);
-        std::cout << " (Rep: " << m_repeatCount << ")" << (m_color ? RESET_COLOR : "") << "]: ";
+        std::cout << " (Rep: " << m_repeatCount << ")" << (m_color and !m_fullColor ? RESET_COLOR : "") << "]: ";
         std::cout << m_repeatedMessage;
+
+        if (m_fullColor)
+            std::cout << RESET_COLOR;
+
         std::cout << std::flush;
 
         return;
@@ -76,22 +83,29 @@ void ConsoleLogger::log(const std::string &message, const LogLevel level)
 
     std::stringstream out;
 
-    out << "[" << getTime() << " " << (m_color ? LogLevelColors[level] : "");
+    if (m_fullColor)
+        out << LogLevelColors[level];
+
+    out << std::endl;
+    out << "[" << getTime() << " " << (m_color and !m_fullColor ? LogLevelColors[level] : "");
     out << formatStringFromLeft(LogLevelNames[level], MAX_LOG_LEVEL_NAME_LENGTH);
-    out << (m_color ? RESET_COLOR : "") << "]: ";
+    out << (m_color and !m_fullColor ? RESET_COLOR : "") << "]: ";
 
     out << message;
+
+    if (m_fullColor)
+        out << RESET_COLOR;
 
     if (level < LogLevel::ERROR)
     {
         // Try to make sure output is properly flushed
         std::cerr << std::flush;
-        std::cout << std::flush << out.str() << std::endl;
+        std::cout << std::flush << out.str() << std::flush;
     }
     else
     {
         std::cout << std::flush;
-        std::cerr << std::flush << out.str() << std::endl;
+        std::cerr << std::flush << out.str() << std::flush;
     }
 }
 
