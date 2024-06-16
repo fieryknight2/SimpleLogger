@@ -3,9 +3,14 @@
 
 #include <chrono>
 #include <ctime>
+#include <format>
 #include <iostream>
 #include <sstream>
 #include <unordered_map>
+
+#ifndef std::format
+#error "This project requires C++20 or later"
+#endif // std::format
 
 constexpr auto DEBUG_COLOR = "\033[34m";
 constexpr auto INFO_COLOR = "\033[32m";
@@ -45,8 +50,7 @@ std::string LoggerLoc::getTime()
 
     // Get the current time
     const auto now = std::chrono::system_clock::now();
-    auto time = std::chrono::current_zone()->to_local(now);
-    const std::string result = std::format("{:%T}", time);
+    const std::string result = std::format("{:%T}", now);
 
     // Get the current date
     const auto date = std::chrono::system_clock::to_time_t(now);
