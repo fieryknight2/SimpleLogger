@@ -1,6 +1,7 @@
 /* Created by Matthew Brown on 6/15/2024 */
 #include "loggerloc.hpp"
 
+#include <chrono>
 #include <ctime>
 #include <iostream>
 #include <sstream>
@@ -40,13 +41,19 @@ std::string formatStringFromLeft(const std::string &name, uint32_t size)
 
 std::string LoggerLoc::getTime()
 {
-    const std::time_t time = std::time(nullptr);
-    const std::tm *timeinfo = std::localtime(&time);
+    static constexpr int MAX_DATE_LENGTH = 11;
 
-    char buffer[21];
-    std::strftime(buffer, sizeof(buffer), "%d/%m/%Y %H:%M:%S", timeinfo);
+    // Get the current time
+    const auto now = std::chrono::system_clock::now();
+    auto time = std::chrono::current_zone()->to_local(now);
+    const std::string result = std::format("{:%T}", time);
 
-    return buffer;
+    // Get the current date
+    const auto date = std::chrono::system_clock::to_time_t(now);
+    char dateString[MAX_DATE_LENGTH];
+    std::strftime(&dateString[0], MAX_DATE_LENGTH, "%d/%m/%Y", std::localtime(&date));
+
+    return std::string(dateString) + " " + result;
 }
 
 void ConsoleLogger::log(const std::string &message, const LogLevel level)
