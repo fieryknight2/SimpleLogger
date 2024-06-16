@@ -12,12 +12,13 @@
 
 #include "loggerloc.hpp"
 
-#define SL_LOG_VERSION_INFO() SL_LOG_INFO("--- Using SimpleLogger " + slog::SimpleLoggerVersion + " ---")
+#define SIMPLE_LOGGER_LOG_VERSION_INFO() SL_LOG_INFO("--- Using SimpleLogger " + slog::SimpleLoggerVersion + " ---")
+#define SL_LOG_VERSION_INFO(name, version) SL_LOG_INFO("--- " + name + " v" + version + " ---")
 
 namespace slog
 {
 
-constexpr std::string SimpleLoggerVersion = "v0.0.1";
+constexpr std::string SimpleLoggerVersion = "v0.0.2";
 
 class SimpleLogger
 {
