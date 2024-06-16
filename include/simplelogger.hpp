@@ -12,6 +12,8 @@
 
 #include "loggerloc.hpp"
 
+#define SF_LOG_VERSION_INFO() SF_LOG_INFO("SimpleLogger v0.0.1")
+
 namespace slog
 {
 
