@@ -19,7 +19,7 @@ endif ()
 option(BUILD_LOGGER_EXAMPLE "Build the logger example" OFF)
 
 # Required C++ version
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # --------------------- SimpleLogger Library ---------------------

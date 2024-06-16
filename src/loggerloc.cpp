@@ -8,10 +8,6 @@
 #include <sstream>
 #include <unordered_map>
 
-#ifndef std::format
-#error "This project requires C++20 or later"
-#endif // std::format
-
 constexpr auto DEBUG_COLOR = "\033[34m";
 constexpr auto INFO_COLOR = "\033[32m";
 constexpr auto WARNING_COLOR = "\033[33m";
