@@ -12,14 +12,15 @@
 
 #include "loggerloc.hpp"
 
-#define SIMPLE_LOGGER_LOG_VERSION_INFO() SL_LOG_INFO("--- Using SimpleLogger " + slog::SimpleLoggerVersion + " ---")
+#define SIMPLE_LOGGER_LOG_VERSION_INFO()                                                                               \
+    SL_LOG_INFO("--- Using SimpleLogger " + std::string(slog::SimpleLoggerVersion) + " ---")
 #define SL_LOG_VERSION_INFO(name, version)                                                                             \
     SL_LOG_INFO("--- " + std::string(name) + " v" + std::string(version) + " ---")
 
 namespace slog
 {
 
-constexpr std::string SimpleLoggerVersion = "v0.0.2";
+constexpr auto SimpleLoggerVersion = "v0.0.2";
 
 class SimpleLogger
 {
@@ -81,7 +82,8 @@ private:
 
 #else // NDEBUG
 
-#define SL_ASSERT(condition, message) #define SL_ASSERT_FALSE(condition, message)
+#define SL_ASSERT(condition, message)
+#define SL_ASSERT_FALSE(condition, message)
 #define SL_ASSERT_TRUE(condition, message)
 
 #endif // NDEBUG
