@@ -1,5 +1,5 @@
 /**
- * @brief Simple logger for C++
+ * @brief Log exception class for SimpleLogger
  *
  * @author Matthew Brown
  * @date 6/15/2024
