@@ -7,12 +7,12 @@
 #include <sstream>
 #include <unordered_map>
 
-constexpr std::string DEBUG_COLOR = "\033[34m";
-constexpr std::string INFO_COLOR = "\033[32m";
-constexpr std::string WARNING_COLOR = "\033[33m";
-constexpr std::string ERROR_COLOR = "\033[31m";
-constexpr std::string FATAL_COLOR = "\033[41m";
-constexpr std::string RESET_COLOR = "\033[0m";
+constexpr auto DEBUG_COLOR = "\033[34m";
+constexpr auto INFO_COLOR = "\033[32m";
+constexpr auto WARNING_COLOR = "\033[33m";
+constexpr auto ERROR_COLOR = "\033[31m";
+constexpr auto FATAL_COLOR = "\033[41m";
+constexpr auto RESET_COLOR = "\033[0m";
 
 namespace slog
 {
