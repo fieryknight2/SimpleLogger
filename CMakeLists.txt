@@ -7,7 +7,7 @@ if (CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
 
 else ()
     # Export the include directory
-    set(SIMPLE_LOGGER_INCLUDE_DIR PARENT_SCOPE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    set(SIMPLE_LOGGER_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include PARENT_SCOPE CACHE INTERNAL)
 
 endif ()
 
@@ -21,7 +21,6 @@ option(BUILD_LOGGER_EXAMPLE "Build the logger example" OFF)
 # Required C++ version
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 
 # --------------------- SimpleLogger Library ---------------------
 add_library(SimpleLogger STATIC
@@ -40,7 +39,7 @@ target_include_directories(SimpleLogger PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inclu
 # Debugging
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-    message("Building SimpleLogger with a log level of ${SIMPLE_LOGGER_MIN_LOG_LEVEL}")
+    message(STATUS "Building SimpleLogger with a log level of ${SIMPLE_LOGGER_MIN_LOG_LEVEL}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Werror -DSF_MIN_LOG_LEVEL=${SIMPLE_LOGGER_MIN_LOG_LEVEL}")
 
 else ()
