@@ -29,6 +29,7 @@ public:
 
     static std::shared_ptr<SimpleLogger> GlobalLogger();
 
+    static void CaptureExceptions();
     void log(const std::string &message, LogLevel level);
     void exception(const LogException &exception);
 
@@ -55,6 +56,8 @@ private:
 };
 
 } // namespace slog
+
+#define SL_CAPTURE_EXCEPTIONS() slog::SimpleLogger::CaptureExceptions()
 
 /** Debug and assert macros */
 #ifndef NDEBUG

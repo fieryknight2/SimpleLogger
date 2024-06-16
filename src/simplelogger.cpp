@@ -22,6 +22,24 @@ std::shared_ptr<SimpleLogger> SimpleLogger::GlobalLogger()
     return s_GlobalLogger;
 }
 
+void SimpleLogger::CaptureExceptions()
+{
+    std::set_terminate(
+            []()
+            {
+                try
+                {
+                    std::rethrow_exception(std::current_exception());
+                }
+                catch (const std::exception &e)
+                {
+                    SL_LOG_FATAL("Unhandled exception: " + std::string(e.what()));
+                }
+
+                std::abort();
+            });
+}
+
 void SimpleLogger::log(const std::string &message, const LogLevel level)
 {
     if (level < m_minLogLevel or level > m_maxLogLevel)
