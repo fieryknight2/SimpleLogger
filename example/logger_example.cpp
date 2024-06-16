@@ -16,6 +16,7 @@ int main(const int argc, char *argv[])
     std::cout << "Log level: " << slog::getLogName(slog::SimpleLogger::GlobalLogger()->getMinLogLevel()) << std::endl;
 
     SIMPLE_LOGGER_LOG_VERSION_INFO();
+    SL_LOG_VERSION_INFO("SimpleLogger Example", "1.0.0");
 
     SL_LOG_WARNING("Ran using " + std::string(argv[0]));
 

@@ -13,7 +13,8 @@
 #include "loggerloc.hpp"
 
 #define SIMPLE_LOGGER_LOG_VERSION_INFO() SL_LOG_INFO("--- Using SimpleLogger " + slog::SimpleLoggerVersion + " ---")
-#define SL_LOG_VERSION_INFO(name, version) SL_LOG_INFO("--- " + name + " v" + version + " ---")
+#define SL_LOG_VERSION_INFO(name, version)                                                                             \
+    SL_LOG_INFO("--- " + std::string(name) + " v" + std::string(version) + " ---")
 
 namespace slog
 {
