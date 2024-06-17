@@ -6,7 +6,6 @@
  */
 #include <iostream>
 #include <thread>
-#include <unordered_map>
 
 #include "simplelogger.hpp"
 

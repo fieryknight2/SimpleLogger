@@ -44,15 +44,27 @@ std::string LoggerLoc::getTime()
     static constexpr int MAX_DATE_LENGTH = 11;
 
     // Get the current time
+    std::stringstream ss;
     const auto now = std::chrono::system_clock::now();
-    const std::string result = std::format("{:%T}", now);
+    auto t = now.time_since_epoch();
 
     // Get the current date
     const auto date = std::chrono::system_clock::to_time_t(now);
     char dateString[MAX_DATE_LENGTH];
     std::strftime(&dateString[0], MAX_DATE_LENGTH, "%d/%m/%Y", std::localtime(&date));
 
-    return std::string(dateString) + " " + result;
+    ss << dateString << " ";
+
+    ss << std::setfill('0') << (std::chrono::duration_cast<std::chrono::hours>(t) % 24).count();
+    ss << ":";
+    ss << std::setfill('0') << std::setw(2) << (std::chrono::duration_cast<std::chrono::minutes>(t) % 60).count();
+    ss << ":";
+    ss << std::setfill('0') << std::setw(2) << (std::chrono::duration_cast<std::chrono::seconds>(t) % 60).count();
+    ss << ".";
+    ss << std::setfill('0') << std::setw(3)
+       << (std::chrono::duration_cast<std::chrono::milliseconds>(t) % 1000).count();
+
+    return ss.str();
 }
 
 void ConsoleLogger::log(const std::string &message, const LogLevel level)
