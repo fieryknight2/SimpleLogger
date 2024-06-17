@@ -20,7 +20,7 @@
 namespace slog
 {
 
-constexpr auto SimpleLoggerVersion = "v0.0.2";
+constexpr auto SimpleLoggerVersion = "v0.0.3";
 
 class SimpleLogger
 {

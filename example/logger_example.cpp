@@ -4,8 +4,11 @@
  * @author Matthew Brown
  * @date 6/15/2024
  */
+#include <algorithm>
 #include <iostream>
+#include <random>
 #include <thread>
+#include <vector>
 
 #include "simplelogger.hpp"
 
@@ -92,6 +95,20 @@ int main(const int argc, char *argv[])
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
         SL_LOG_DEBUG("This is a debug message");
     }
+
+    SL_LOG_INFO("Starting test for sorting vector");
+    std::vector<int> testVector(1'000'000);
+    std::uniform_int_distribution dist(0, 1'000'000);
+    std::default_random_engine generator{static_cast<unsigned int>(time(nullptr))};
+    for (auto &i: testVector)
+    {
+        i = dist(generator);
+    }
+
+    // Sort the vector
+    std::ranges::sort(testVector);
+
+    SL_LOG_INFO("Finished test for sorting vector");
 
     return 0;
 }
