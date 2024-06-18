@@ -26,7 +26,7 @@ class SimpleLogger
 {
 public:
     SimpleLogger() = default;
-    ~SimpleLogger() = default;
+    ~SimpleLogger();
 
     static std::shared_ptr<SimpleLogger> GlobalLogger();
 

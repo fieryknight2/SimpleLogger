@@ -2,9 +2,17 @@
 #include "simplelogger.hpp"
 
 #include <algorithm>
+#include <iostream>
 
 namespace slog
 {
+
+SimpleLogger::~SimpleLogger()
+{
+    clearLoggers();
+
+    std::cout << "\n\n" << std::endl;
+}
 
 std::shared_ptr<SimpleLogger> SimpleLogger::s_GlobalLogger;
 
