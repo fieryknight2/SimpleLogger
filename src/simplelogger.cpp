@@ -96,9 +96,7 @@ void SimpleLogger::removeLogger(const std::shared_ptr<LoggerLoc> &loggerLoc)
     if (loggerLoc == nullptr)
         return;
 
-    auto logger = std::ranges::find(m_loggerLocs, loggerLoc);
-
-    if (logger != m_loggerLocs.end())
+    if (const auto logger = std::ranges::find(m_loggerLocs, loggerLoc); logger != m_loggerLocs.end())
         m_loggerLocs.erase(logger);
 }
 
@@ -107,7 +105,7 @@ void SimpleLogger::clearLoggers() { m_loggerLocs.clear(); }
 std::shared_ptr<LoggerLoc> SimpleLogger::getLogger(const uint32_t index)
 {
     if (index >= m_loggerLocs.size())
-        return {};
+        return nullptr;
 
     return m_loggerLocs[index];
 }
