@@ -58,6 +58,23 @@ protected:
     [[nodiscard]] static std::string getTime();
 };
 
+class SimpleConsoleLogger final : public LoggerLoc
+{
+public:
+    SimpleConsoleLogger() = default;
+
+    void log(const std::string &message, LogLevel level) override;
+    void exception(const LogException &exception) override;
+
+    void enableColor() { m_color = true; }
+    void enableColor(const bool enable) { m_color = enable; }
+    void disableColor() { m_color = false; }
+    [[nodiscard]] bool isColorEnabled() const { return m_color; }
+
+private:
+    bool m_color = false;
+};
+
 class ConsoleLogger final : public LoggerLoc
 {
 public:

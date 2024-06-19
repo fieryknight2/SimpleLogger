@@ -68,6 +68,47 @@ std::string LoggerLoc::getTime()
     return ss.str();
 }
 
+void SimpleConsoleLogger::log(const std::string &message, const LogLevel level)
+{
+    if (level < m_minLogLevel or level > m_maxLogLevel)
+        return;
+
+    std::stringstream out;
+
+    if (m_color)
+        out << LogLevelColors[level];
+
+    out << std::endl;
+    out << "[" << getTime() << " ";
+    out << formatStringFromLeft(LogLevelNames[level], MAX_LOG_LEVEL_NAME_LENGTH);
+    out << "]: ";
+
+    out << message;
+
+    if (m_color)
+        out << RESET_COLOR;
+
+    if (level < LogLevel::ERROR)
+    {
+        // Try to make sure output is properly flushed
+        std::cerr << std::flush;
+        std::cout << std::flush << out.str() << std::flush;
+    }
+    else
+    {
+        std::cout << std::flush;
+        std::cerr << std::flush << out.str() << std::flush;
+    }
+}
+
+void SimpleConsoleLogger::exception(const LogException &exception)
+{
+    std::string error = "Uncaught Exception Occurred! ";
+    error += exception.what();
+
+    log(error, LogLevel::FATAL);
+}
+
 void ConsoleLogger::log(const std::string &message, const LogLevel level)
 {
     if (level < m_minLogLevel or level > m_maxLogLevel)
@@ -117,7 +158,6 @@ void ConsoleLogger::log(const std::string &message, const LogLevel level)
 
     if (level < LogLevel::ERROR)
     {
-        // Try to make sure output is properly flushed
         std::cerr << std::flush;
         std::cout << std::flush << out.str() << std::flush;
     }
