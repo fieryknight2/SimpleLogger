@@ -36,6 +36,10 @@ add_library(SimpleLogger STATIC
 
 target_include_directories(SimpleLogger PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+if (DEFINED ENABLE_STD_FORMAT)
+    target_compile_definitions(SimpleLogger PUBLIC SL_ENABLE_STD_FORMAT=${ENABLE_STD_FORMAT})
+endif ()
+
 # Debugging
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 

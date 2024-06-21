@@ -78,6 +78,10 @@ private:
 
 } // namespace slog
 
+#ifdef SL_ENABLE_STD_FORMAT
+#include <format>
+#endif // SL_ENABLE_STD_FORMAT
+
 /** Gets the default console logger, this won't work if you've deleted it or cleared the loggers */
 #define SL_GET_CONSOLE_LOGGER()                                                                                        \
     std::dynamic_pointer_cast<slog::ConsoleLogger>(slog::SimpleLogger::GlobalLogger()->getLogger(0))
@@ -133,8 +137,15 @@ private:
 
 // NDEBUG forceably disables debug messages
 #ifndef NDEBUG
+
+#ifdef SL_ENABLE_STD_FORMAT
+/** Log message with the debug level */
+#define SL_LOG_DEBUG(...) slog::SimpleLogger::GlobalLogger()->log(std::format(__VA_ARGS__), slog::LogLevel::DEBUG)
+#else
 /** Log message with the debug level */
 #define SL_LOG_DEBUG(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::DEBUG)
+#endif // SL_ENABLE_STD_FORMAT
+
 #else
 #define SL_LOG_DEBUG(message)
 #endif // NDEBUG
@@ -144,35 +155,77 @@ private:
 #endif // SF_MIN_LOG_LEVEL == 0
 
 #if SL_MIN_LOG_LEVEL > 2
+
+#ifdef SL_ENABLE_STD_FORMAT
+/** Log formatted message with the info level */
+#define SF_LOG_INFO(...) slog::SimpleLogger::GlobalLogger()->log(std::format(__VA_ARGS__), slog::LogLevel::INFO)
+#else
 /** Log message with the info level */
 #define SF_LOG_INFO(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::INFO)
+#endif // SL_ENABLE_STD_FORMAT
+
 #else
 #define SF_LOG_INFO(message)
 #endif // SF_MIN_LOG_LEVEL > 0
 
 #if SL_MIN_LOG_LEVEL > 1
+
+#ifdef SL_ENABLE_STD_FORMAT
+/** Log formatted message with the warning level */
+#define Sl_LOG_WARNING(...) slog::SimpleLogger::GlobalLogger()->log(std::format(__VA_ARGS__), slog::LogLevel::WARNING)
+#else
 /** Log message with the warning level */
 #define SL_LOG_WARNING(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::WARNING)
+#endif // SL_ENABLE_STD_FORMAT
+
 #else
 #define SL_LOG_WARNING(message)
 #endif // SF_MIN_LOG_LEVEL > 1
 
 #if SL_MIN_LOG_LEVEL > 0
+
+#ifdef SL_ENABLE_STD_FORMAT
+/** Log formatted message with the error level */
+#define Sl_LOG_ERROR(...) slog::SimpleLogger::GlobalLogger()->log(std::format(__VA_ARGS__), slog::LogLevel::ERROR)
+#else
 /** Log message with the error level */
-#define SL_LOG_ERROR(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::ERROR)
+#define Sl_LOG_ERROR(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::ERROR)
+#endif // SL_ENABLE_STD_FORMAT
+
 #else
 #define SL_LOG_ERROR(message)
 #endif // SF_MIN_LOG_LEVEL > 2
 
 #if SL_MIN_LOG_LEVEL > -1
+
+#ifdef SL_ENABLE_STD_FORMAT
+/** Log formatted message with the fatal level */
+#define Sl_LOG_FATAL(...) slog::SimpleLogger::GlobalLogger()->log(std::format(__VA_ARGS__), slog::LogLevel::FATAL)
+#else
 /** Log message with the fatal level */
 #define Sl_LOG_FATAL(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::FATAL)
+#endif // SL_ENABLE_STD_FORMAT
+
 #else
 #define SL_LOG_FATAL(message)
 #endif // SL_MIN_LOG_LEVEL > 3
 
 #else // SL_MIN_LOG_LEVEL
 
+#ifdef SL_ENABLE_STD_FORMAT
+
+/** Log formatted message with the debug level */
+#define SL_LOG_DEBUG(...) slog::SimpleLogger::GlobalLogger()->log(std::format(__VA_ARGS__), slog::LogLevel::DEBUG)
+/** Log formatted message with the info level */
+#define SL_LOG_INFO(...) slog::SimpleLogger::GlobalLogger()->log(std::format(__VA_ARGS__), slog::LogLevel::INFO)
+/** Log formatted message with the warning level */
+#define SL_LOG_WARNING(...) slog::SimpleLogger::GlobalLogger()->log(std::format(__VA_ARGS__), slog::LogLevel::WARNING)
+/** Log formatted message with the error level */
+#define SL_LOG_ERROR(...) slog::SimpleLogger::GlobalLogger()->log(std::format(__VA_ARGS__), slog::LogLevel::ERROR)
+/** Log formatted message with the fatal level */
+#define SL_LOG_FATAL(...) slog::SimpleLogger::GlobalLogger()->log(std::format(__VA_ARGS__), slog::LogLevel::FATAL)
+
+#else
 // Log level not set, so default to everything
 /** Log message with the debug level */
 #define SL_LOG_DEBUG(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::DEBUG)
@@ -184,5 +237,7 @@ private:
 #define SL_LOG_ERROR(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::ERROR)
 /** Log message with the fatal level */
 #define SL_LOG_FATAL(message) slog::SimpleLogger::GlobalLogger()->log(message, slog::LogLevel::FATAL)
+
+#endif // SL_ENABLE_STD_FORMAT
 
 #endif // SL_MIN_LOG_LEVEL
