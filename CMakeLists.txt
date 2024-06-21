@@ -44,7 +44,7 @@ endif ()
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
     message(STATUS "Building SimpleLogger with a log level of ${SIMPLE_LOGGER_MIN_LOG_LEVEL}")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Werror -DSF_MIN_LOG_LEVEL=${SIMPLE_LOGGER_MIN_LOG_LEVEL}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DSF_MIN_LOG_LEVEL=${SIMPLE_LOGGER_MIN_LOG_LEVEL}")
 
 else ()
     # Release build
