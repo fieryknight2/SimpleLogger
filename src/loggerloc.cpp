@@ -84,6 +84,7 @@ void SimpleConsoleLogger::log(const std::string &message, const LogLevel level)
     out << "]: ";
 
     out << message;
+    out << "  "; // Some spacing
 
     if (m_color)
         out << RESET_COLOR;
@@ -152,6 +153,7 @@ void ConsoleLogger::log(const std::string &message, const LogLevel level)
     out << (m_color and !m_fullColor ? RESET_COLOR : "") << "]: ";
 
     out << message;
+    out << "  "; // Some spacing
 
     if (m_fullColor)
         out << RESET_COLOR;
