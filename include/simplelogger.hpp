@@ -110,6 +110,25 @@ private:
 /** Equivalent to SL_ASSERT_TRUE(condition, message) */
 #define SL_ASSERT(condition, message) SL_ASSERT_TRUE(condition, message)
 
+#ifdef SL_ENABLE_STD_FORMAT
+
+/** Assertion that condition is false, on fail it will throw an slog::LogException with the formatted message */
+#define SL_ASSERTF_FALSE(condition, ...)                                                                               \
+    if (condition)                                                                                                     \
+    {                                                                                                                  \
+        throw slog::LogException(std::format(__VA_ARGS__));                                                            \
+    }
+
+#define SL_ASSERTF_TRUE(condition, ...)                                                                                \
+    if (!(condition))                                                                                                  \
+    {                                                                                                                  \
+        throw slog::LogException(std::format(__VA_ARGS__));                                                            \
+    }
+
+#define SL_ASSERTF(condition, ...) SL_ASSERTF_TRUE(condition, __VA_ARGS__)
+
+#endif // SL_ENABLE_STD_FORMAT
+
 #else // NDEBUG
 
 #define SL_ASSERT(condition, message)
